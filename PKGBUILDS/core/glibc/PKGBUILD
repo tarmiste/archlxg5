@@ -1,28 +1,26 @@
 # $Id$
-# Maintainer:  
-# Contributor: 
+# Maintainer:  Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor: Allan McRae <allan@archlinux.org>
 
 # toolchain build order: linux-api-headers->glibc->binutils->gcc->binutils->glibc
 # NOTE: valgrind requires rebuilt with each major glibc version
 
-# ALARM: Kevin Mihelich <kevin@archlinuxarm.org>
+# ALARM: Kevin Mihelich <kevin@archlinuxppc.org>
 #  - Specify our build host type
 #  - Disabled distcc
 #  - Strip out Arch x86 multilib
 
-# G5: Tom Armistead, WIP
-
 noautobuild=1
 
 pkgname=glibc
-pkgver=2.27
+pkgver=2.26
 pkgrel=1
 arch=(x86_64)
 url='http://www.gnu.org/software/libc'
 license=(GPL LGPL)
 makedepends=(git gd)
 options=(!strip staticlibs !distcc)
-_commit=633e2f7f3d88df6427aa3a7a984d3a6b796d9611  # release/2.27/master
+_commit=633e2f7f3d88df6427aa3a7a984d3a6b796d9611  # release/2.26/master
 source=(${pkgname}-${pkgver}.tar.xz
         locale.gen.txt
         locale-gen
@@ -45,7 +43,7 @@ md5sums=('102f637c3812f81111f48f2427611be1'
 prepare() {
   mkdir -p glibc-build
 
-  cd glibc-2.27
+  cd glibc-2.26
 
   local i; for i in ${source[@]}; do
     case ${i%::*} in
@@ -65,7 +63,7 @@ build() {
   local _configure_flags=(
       --prefix=/usr
       --with-headers=/usr/include
-      --with-bugurl=https://github.com/archlinuxg5/PKGBUILDs/issues
+      --with-bugurl=https://github.com/archlinuxppc/PKGBUILDs/issues
       --enable-add-ons
       --enable-bind-now
       --enable-lock-elision
@@ -89,7 +87,7 @@ build() {
   # remove fortify for building libraries
   CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
 
-  "$srcdir/glibc-2.27/configure" \
+  "$srcdir/glibc-2.26/configure" \
       --libdir=/usr/lib \
       --libexecdir=/usr/lib \
       ${_configure_flags[@]} \
@@ -133,7 +131,7 @@ package() {
   make -C glibc-build install_root="$pkgdir" install
   rm -f "$pkgdir"/etc/ld.so.{cache,conf}
 
-  cd glibc-2.27
+  cd glibc-2.26
 
   install -dm755 "$pkgdir"/usr/lib/{locale,systemd/system,tmpfiles.d}
   install -m644 nscd/nscd.conf "$pkgdir/etc/nscd.conf"
@@ -148,7 +146,7 @@ package() {
   # create /etc/locale.gen
   install -m644 "$srcdir/locale.gen.txt" "$pkgdir/etc/locale.gen"
   sed -e '1,3d' -e 's|/| |g' -e 's|\\| |g' -e 's|^|#|g' \
-    "$srcdir/glibc-2.27/localedata/SUPPORTED" >> "$pkgdir/etc/locale.gen"
+    "$srcdir/glibc-2.26/localedata/SUPPORTED" >> "$pkgdir/etc/locale.gen"
 
   # ALARM: symlink ld-linux.so.3 for hard-float
   # Removed

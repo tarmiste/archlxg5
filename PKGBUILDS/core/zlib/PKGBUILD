@@ -1,8 +1,8 @@
-# $Id: 
-# Maintainer: 
+# $Id: PKGBUILD 310007 2017-11-15 14:11:34Z foutrelis $
+# Maintainer: Pierre Schmitz <pierre@archlinux.de>
 
 pkgbase=zlib
-#pkgname=(zlib minizip)  disable minizip for now.
+#pkgname=(zlib minizip)
 pkgname=(zlib)
 epoch=1
 pkgver=1.2.11

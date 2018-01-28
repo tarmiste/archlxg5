@@ -6,8 +6,6 @@
 # ALARM: Kevin Mihelich <kevin@archlinuxarm.org>
 #  - for some reason, SHLIB_LIBS isn't populating through for our builds.
 #  - fixed with a sed.
-#
-# G5:  Tom Armistead WIP
 
 pkgname=readline
 _basever=7.0
@@ -53,15 +51,15 @@ build() {
   [[ $CARCH == "x86_64" ]] && CFLAGS="$CFLAGS -fPIC"
 
   ./configure --prefix=/usr
-  #make SHLIB_LIBS=-lncurses
-  # XXX following needed when bootstrapping
-  make SHLIB_LIBS="-L/tools/lib -lncurses"
+  make SHLIB_LIBS=-lncurses
+  # XXX needed when bootstrapping
+  #make SHLIB_LIBS="-L/tools/lib -lncurses"
 }
 
 package() {
-  #make SHLIB_LIBS="-lncurses"-C $pkgname-$_basever DESTDIR="$pkgdir" install
-  # XXX following needed when bootstrapping
-  make SHLIB_LIBS="-L/tools/lib -lncurses"-C $pkgname-$_basever DESTDIR="$pkgdir" install
+  make SHLIB_LIBS="-lncurses"-C $pkgname-$_basever DESTDIR="$pkgdir" install
+  # XXX needed when bootstrapping
+  #make SHLIB_LIBS="-L/tools/lib -lncurses"-C $pkgname-$_basever DESTDIR="$pkgdir" install
   install -Dm644 inputrc "$pkgdir"/etc/inputrc
 }
 

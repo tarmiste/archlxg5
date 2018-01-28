@@ -17,7 +17,7 @@ noautobuild=1
 
 #pkgname=(gcc gcc-libs gcc-fortran gcc-objc gcc-go)
 pkgname=(gcc gcc-libs )
-pkgver=7.3.0
+pkgver=7.2.0
 _majorver=${pkgver:0:1}
 _islver=0.18
 pkgrel=2
@@ -61,7 +61,7 @@ snapshot() {
 }
 
 prepare() {
-  ln -s gcc-7.3.0 gcc
+  ln -s gcc-7.2.0 gcc
   cd gcc
 
   # link isl for in-tree build

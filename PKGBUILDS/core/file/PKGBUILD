@@ -1,7 +1,7 @@
 # $Id: PKGBUILD 310007 2017-11-15 14:11:34Z foutrelis $
-# Maintainer: 
-# Contributor: 
-# Contributor: 
+# Maintainer: Sébastien Luttringer <seblu@archlinux.org>
+# Contributor: Allan McRae <allan@archlinux.org>
+# Contributor: Andreas Radke <andyrtr@archlinux.org>
 
 pkgname=file
 pkgver=5.32
